@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import numpy as np
 import scipy.special
 import argparse
@@ -9,7 +11,7 @@ def cords(s):
         return x, y
     except:
         raise argparse.ArgumentTypeError("Coordinates must be x,y")
-
+#example ./bezier.py -p 0,0 1,2 2,1 -c -n 1000
 parser = argparse.ArgumentParser(description='Plot a Bézier curve.')
 parser.add_argument('-p', '--points', dest='cords', nargs='+',help='point to plot, appends to list')
 parser.add_argument('-c', '--control_polygon', help='plot control polygon')
@@ -24,9 +26,6 @@ def plot_bezier_curve(points, nTimes=1000, control_polygon=False):
         control_polygon is a boolean value, if True, then plot the control
         polygon, if False don't plot it. Defaults to False
     """
-    # for i in points:
-    #     print(i.split(','))
-
     points = np.char.split(points, sep=',')
     nPoints = len(points)
     xPoints = np.array([p[0] for p in points], dtype=float)
@@ -60,5 +59,3 @@ if __name__ == '__main__':
             points.append(cords(point))
 
         plot_bezier_curve(np.array(args.cords), control_polygon=args.control_polygon, nTimes=args.nTimes)
-    else:
-        plot_bezier_curve(np.array([[0, 0], [1, 2], [2, 1]]), control_polygon=True)
